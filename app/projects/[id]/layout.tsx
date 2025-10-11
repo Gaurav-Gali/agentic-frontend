@@ -1,23 +1,20 @@
 import React from 'react';
 import ProjectsNavbar from "@/components/projects/ProjectsNavbar";
 import SideBar from "@/components/projects/SideBar";
+import AbsoluteWrapper from "@/components/AbsoluteWrapper";
 
 const Layout = ({children}:{children:React.ReactNode}) => {
     return (
         <div>
-            <div className="absolute z-50 top-0 left-0 w-full h-screen pointer-events-none">
-                <div className="pointer-events-auto">
-                    <ProjectsNavbar/>
-                </div>
-            </div>
+            <AbsoluteWrapper className={"top-0 left-0 w-full"}>
+                <ProjectsNavbar/>
+            </AbsoluteWrapper>
 
-            <div className="absolute z-40 top-15 left-0 h-full pointer-events-none">
-                <div className="pointer-events-auto">
-                    <SideBar />
-                </div>
-            </div>
+            <AbsoluteWrapper className={"top-15 left-0"}>
+                <SideBar/>
+            </AbsoluteWrapper>
 
-            <div className="w-full h-full">
+            <div className="w-full h-screen">
                 {children}
             </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Plus} from "lucide-react";
+import {Plus,X} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const endpoints = [
@@ -40,6 +40,7 @@ const ProjectsNavbar = () => {
                     {endpoints.map((endpoint) => (
                         <div key={endpoint.id} className={"bg-white text-zinc-500 hover:bg-zinc-100 transition-all duration-300 cursor-pointer flex items-center gap-1.5 justify-center border border-zinc-200 px-3 h-full rounded-full"}>
                             <p>{endpoint.endpoint}</p>
+                            <X size={12}/>
                         </div>
                     ))}
                 </div>
