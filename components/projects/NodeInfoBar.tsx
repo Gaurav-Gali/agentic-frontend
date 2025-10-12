@@ -2,11 +2,19 @@
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
+import {useAtom} from "jotai";
+import {SelectedNodeAtom} from "@/store/Nodes/SelectedNode";
+import {useFetchNode} from "@/actions/NodeActions/FetchNode";
+import {NodeType} from "@/types/NodeType";
 
-const NodeInfoBar = ({ id }: { id: string | null }) => {
+export const NodeInfoBar = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const fetchNode = useFetchNode();
 
-    if (id === null) return null;
+    const [id, setId] = useAtom(SelectedNodeAtom);
+    const node:NodeType|null = fetchNode(id);
+
+    if (node === null) return null;
 
     return (
         <div className="px-4 py-2">
@@ -24,8 +32,8 @@ const NodeInfoBar = ({ id }: { id: string | null }) => {
             >
                 {/* Header */}
                 <div className="px-4 py-3 flex items-center justify-between border-b border-zinc-100">
-                    <span className="text-zinc-700 text-[15px] font-semibold flex items-center gap-2">
-                        Trigger
+                    <span className="text-zinc-700 capitalize text-[15px] font-semibold flex items-center gap-2">
+                        {node.type.slice(0,node.type.length-4)}
                     </span>
                     <div className="cursor-pointer flex items-center gap-3">
                         {/* Toggle Collapse */}
@@ -37,7 +45,7 @@ const NodeInfoBar = ({ id }: { id: string | null }) => {
                             )}
                         </div>
                         {/* Close (clear node) */}
-                        <X size={16} className="text-zinc-500 hover:text-zinc-700 transition-colors cursor-pointer" />
+                        <X onClick={() => setId("")} size={16} className="text-zinc-500 hover:text-zinc-700 transition-colors cursor-pointer" />
                     </div>
                 </div>
 
@@ -56,5 +64,3 @@ const NodeInfoBar = ({ id }: { id: string | null }) => {
         </div>
     );
 };
-
-export default NodeInfoBar;
