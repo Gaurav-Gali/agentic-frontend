@@ -1,0 +1,19 @@
+import {atom} from "jotai";
+import {NodeType} from "@/types/NodeType";
+import {EdgeType} from "@/types/EdgeType";
+
+export const NodesAtom = atom<NodeType[]>(
+    [
+        {
+            id:"1",
+            position: {
+                x:0,
+                y:0
+            },
+            type:"triggerNode",
+            data:null
+        },
+    ]
+);
+
+export const EdgesAtom = atom<EdgeType[]>([]);
