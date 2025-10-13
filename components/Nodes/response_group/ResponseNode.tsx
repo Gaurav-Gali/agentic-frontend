@@ -6,13 +6,9 @@ import {Send} from "lucide-react";
 const ResponseNode = ({id}:{id:string}) => {
     const targetHandles:HandleType[] = [
         {
-            id:"trigger-output",
+            id:"response-input",
             type:"target",
-        },
-        {
-            id:"trigger-output2",
-            type:"target",
-        },
+        }
     ]
 
     return (

@@ -31,10 +31,26 @@ export default function App() {
     );
 
     const onEdgesChange = useCallback(
-        (changes) =>
-            setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
+        (changes) => {
+            setEdges((edgesSnapshot) => {
+                let updatedEdges = applyEdgeChanges(changes, edgesSnapshot);
+
+                const deletedEdgeIds = changes
+                    .filter((c) => c.type === "remove")
+                    .map((c) => c.id);
+
+                if (deletedEdgeIds.length > 0) {
+                    updatedEdges = updatedEdges.filter(
+                        (edge) => !deletedEdgeIds.includes(edge.id)
+                    );
+                }
+
+                return updatedEdges;
+            });
+        },
         []
     );
+
 
     // --- When connecting nodes ---
     const onConnect = useCallback(
@@ -57,17 +73,20 @@ export default function App() {
                     (e) => e.target === params.target && e.targetHandle === params.targetHandle
                 );
 
+                let updatedEdges;
                 if (existingEdgeIndex !== -1) {
-                    const updatedEdges = [...prevEdges];
+                    updatedEdges = [...prevEdges];
                     updatedEdges[existingEdgeIndex] = newEdge;
-                    return updatedEdges;
+                } else {
+                    updatedEdges = [...prevEdges, newEdge];
                 }
 
-                return [...prevEdges, newEdge];
+                return updatedEdges;
             });
         },
-        []
+        [nodes, setEdges]
     );
+
 
     // --- Auto animate edges when node data changes ---
     useEffect(() => {
