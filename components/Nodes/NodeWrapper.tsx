@@ -7,26 +7,27 @@ import {cn} from "@/lib/utils";
 import {useAtom} from "jotai";
 import {SelectedNodeAtom} from "@/store/Nodes/SelectedNode";
 
-const NodeWrapper = ({children, nodeName, nodeId,sourceHandles, targetHandles}:{children:React.ReactNode, nodeName:string, nodeId:string,sourceHandles:HandleType[]|null, targetHandles:HandleType[]|null}) => {
+const NodeWrapper = ({children, nodeName, nodeId,sourceHandles, targetHandles, handleRun}:{children:React.ReactNode, nodeName:string, nodeId:string,sourceHandles:HandleType[]|null, targetHandles:HandleType[]|null, handleRun:()=>void}) => {
     const [running, setRunning] = useState<boolean>(false);
     const [executed, setExecuted] = useState<boolean>(false);
     const [selectedNode, setSelectedNode] = useAtom(SelectedNodeAtom);
 
-    const handleNodeRun = () => {
+    const handleNodeRun = async () => {
         setRunning(true);
         setExecuted(false);
 
-        setTimeout(() => {
-            setRunning(false);
-            setExecuted(true);
-        }, 1000);
+
+        await handleRun();
+
+        setRunning(false);
+        setExecuted(true);
     }
 
     const maxHandles = Math.max(sourceHandles?.length || 0, targetHandles?.length || 0);
     const minHeight = maxHandles > 0 ? 25 + maxHandles * 10 + 5 : 40;
 
     return (
-        <div onClick={() => setSelectedNode(nodeId)} className={"flex flex-col items-center justify-center gap-0.5"}>
+        <div onClick={() => setSelectedNode(nodeId)} className={"flex flex-col items-center w-fit justify-center gap-0.5"}>
             {/*Input Handles*/}
             {targetHandles?.map((handle:HandleType, index:number) => (
                 <Handle

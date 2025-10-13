@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import {useAtom} from "jotai";
 import {SelectedNodeAtom} from "@/store/Nodes/SelectedNode";
-import {useFetchNode} from "@/actions/NodeActions/FetchNode";
+import {useFetchNode} from "@/hooks/NodeActions/FetchNode";
 import {NodeType} from "@/types/NodeType";
 
 export const NodeInfoBar = () => {

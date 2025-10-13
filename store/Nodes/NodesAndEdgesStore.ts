@@ -13,6 +13,15 @@ export const NodesAtom = atom<NodeType[]>(
             type:"triggerNode",
             data:null
         },
+        {
+            id:"2",
+            position: {
+                x:100,
+                y:0
+            },
+            type:"resposeNode",
+            data:null
+        },
     ]
 );
 
