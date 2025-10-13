@@ -1,5 +1,5 @@
 import React from 'react';
-import {Plus,X} from "lucide-react";
+import {Key, Plus, X} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const endpoints = [
@@ -50,24 +50,30 @@ const ProjectsNavbar = () => {
                 </div>
             </div>
 
-            <div className={"px-2 py-1 rounded-full bg-white border border-zinc-200"}>
-                <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
-                    <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                        <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <Avatar>
-                        <AvatarImage
-                            src="https://github.com/maxleiter.png"
-                            alt="@maxleiter"
-                        />
-                        <AvatarFallback>LR</AvatarFallback>
-                    </Avatar>
-                    <Avatar>
-                        <p className={"w-full hover:bg-zinc-100 bg-zinc-50 cursor-pointer flex items-center justify-center"}>
-                            <Plus color={"oklch(55.2% 0.016 285.938)"} size={16}/>
-                        </p>
-                    </Avatar>
+            <div className={"flex items-center justify-center gap-3"}>
+                <div className={"px-2 py-1 rounded-full w-10 h-10 hover:bg-zinc-100 cursor-pointer flex items-center justify-center bg-white border border-zinc-200"}>
+                    <Key color={"oklch(55.2% 0.016 285.938)"} size={16}/>
+                </div>
+
+                <div className={"px-2 py-1 rounded-full bg-white border border-zinc-200"}>
+                    <div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2">
+                        <Avatar>
+                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                            <AvatarImage
+                                src="https://github.com/maxleiter.png"
+                                alt="@maxleiter"
+                            />
+                            <AvatarFallback>LR</AvatarFallback>
+                        </Avatar>
+                        <Avatar>
+                            <p className={"w-full hover:bg-zinc-100 bg-zinc-50 cursor-pointer flex items-center justify-center"}>
+                                <Plus color={"oklch(55.2% 0.016 285.938)"} size={16}/>
+                            </p>
+                        </Avatar>
+                    </div>
                 </div>
             </div>
 

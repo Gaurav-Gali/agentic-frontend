@@ -5,6 +5,7 @@ import {HandleType} from "@/types/HandleType";
 import {useAtom} from "jotai";
 import {NodesAtom} from "@/store/Nodes/NodesAndEdgesStore";
 import {NodeType} from "@/types/NodeType";
+import {useSetNodeData} from "@/hooks/NodeActions/useSetNodeData";
 
 const TriggerNode = ({id}:{id:string}) => {
     const [nodes, setNodes] = useAtom<NodeType[]>(NodesAtom);
@@ -16,16 +17,10 @@ const TriggerNode = ({id}:{id:string}) => {
         }
     ]
 
+    const setNodeData= useSetNodeData();
+
     return (
-        <NodeWrapper handleRun={() => {
-            setNodes((prev) =>
-                prev.map((node) =>
-                    node.id === id
-                        ? { ...node, data: { ...node.data, key1: "value1" } }
-                        : node
-                )
-            );
-        }} nodeName={"trigger"} nodeId={id} targetHandles={null} sourceHandles={sourceHandles}>
+        <NodeWrapper handleRun={() => setNodeData(id,{"key1":"val1"})} nodeName={"Trigger"} nodeId={id} targetHandles={null} sourceHandles={sourceHandles}>
             <div>
                 <Zap className={"text-emerald-400"} strokeWidth={1.5} size={16}/>
             </div>

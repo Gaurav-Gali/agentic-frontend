@@ -4,17 +4,19 @@ import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import {useAtom} from "jotai";
 import {SelectedNodeAtom} from "@/store/Nodes/SelectedNode";
-import {useFetchNode} from "@/hooks/NodeActions/FetchNode";
-import {NodeType} from "@/types/NodeType";
+import {useNodeFeatures} from "@/hooks/NodeActions/useNodeFeatures";
 
 export const NodeInfoBar = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const fetchNode = useFetchNode();
 
     const [id, setId] = useAtom(SelectedNodeAtom);
-    const node:NodeType|null = fetchNode(id);
+
+    const nodeFeatures = useNodeFeatures();
+    const [node, nodeFeature] = nodeFeatures(id);
 
     if (node === null) return null;
+
+    const InfoComp = nodeFeature?.nodeInfoComp;
 
     return (
         <div className="px-4 py-2">
@@ -33,7 +35,7 @@ export const NodeInfoBar = () => {
                 {/* Header */}
                 <div className="px-4 py-3 flex items-center justify-between border-b border-zinc-100">
                     <span className="text-zinc-700 capitalize text-[15px] font-semibold flex items-center gap-2">
-                        {node.type.slice(0,node.type.length-4)}
+                        {nodeFeature?.nodeName}
                     </span>
                     <div className="cursor-pointer flex items-center gap-3">
                         {/* Toggle Collapse */}
@@ -56,9 +58,7 @@ export const NodeInfoBar = () => {
                         collapsed ? "opacity-0 h-0" : "opacity-100 p-4 h-auto"
                     )}
                 >
-                    <p className="text-sm text-zinc-500">
-                        Node information content goes here — details, inputs, and configs.
-                    </p>
+                    {InfoComp && <InfoComp nodeId={id} />}
                 </div>
             </div>
         </div>

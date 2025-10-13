@@ -12,7 +12,7 @@ const ResponseNode = ({id}:{id:string}) => {
     ]
 
     return (
-        <NodeWrapper nodeName={"Response"} nodeId={id} targetHandles={targetHandles} sourceHandles={null}>
+        <NodeWrapper handleRun={() => {}} nodeName={"Response"} nodeId={id} targetHandles={targetHandles} sourceHandles={null}>
             <div>
                 <Send className={"text-indigo-400"} strokeWidth={1.5} size={16}/>
             </div>
