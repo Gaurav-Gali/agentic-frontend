@@ -1,7 +1,7 @@
 import React from 'react';
 import ProjectsNavbar from "@/components/projects/ProjectsNavbar";
 import SideBar from "@/components/projects/SideBar";
-import AbsoluteWrapper from "@/components/AbsoluteWrapper";
+import AbsoluteWrapper from "@/components/utilities/AbsoluteWrapper";
 
 const Layout = ({children}:{children:React.ReactNode}) => {
     return (

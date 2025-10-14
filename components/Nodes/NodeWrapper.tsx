@@ -6,8 +6,10 @@ import {cn} from "@/lib/utils";
 
 import {useAtom} from "jotai";
 import {SelectedNodeAtom} from "@/store/Nodes/SelectedNode";
+import {useFetchNode} from "@/hooks/NodeActions/useFetchNode";
 
 const NodeWrapper = ({children, nodeName, nodeId,sourceHandles, targetHandles, handleRun}:{children:React.ReactNode, nodeName:string, nodeId:string,sourceHandles:HandleType[]|null, targetHandles:HandleType[]|null, handleRun:()=>void}) => {
+    const fetchNode = useFetchNode();
     const [running, setRunning] = useState<boolean>(false);
     const [executed, setExecuted] = useState<boolean>(false);
     const [selectedNode, setSelectedNode] = useAtom(SelectedNodeAtom);
@@ -16,8 +18,9 @@ const NodeWrapper = ({children, nodeName, nodeId,sourceHandles, targetHandles, h
         setRunning(true);
         setExecuted(false);
 
-
         await handleRun();
+
+        console.log(fetchNode(nodeId));
 
         setRunning(false);
         setExecuted(true);
@@ -44,9 +47,14 @@ const NodeWrapper = ({children, nodeName, nodeId,sourceHandles, targetHandles, h
 
             {/*Main*/}
             <span onClick={() => handleNodeRun()} className={"absolute cursor-pointer top-[-4px] right-[-4px] flex items-center justify-center text-green-500 bg-green-300 border-[1px] border-green-400 rounded-full p-[3px]"}>
-                {running ? <Loader className={"animate-spin"} size={8}/> : <>
-                    {executed ? <Check size={8}/> : <Play size={8}/>}
-                </>}
+                {fetchNode(nodeId)?.data != null ? (
+                    <Check size={8} />
+                ) : running ? (
+                    <Loader className="animate-spin" size={8} />
+                ) : (
+                    <Play size={8} />
+                )}
+
             </span>
             <div
                 className={cn("bg-white min-w-10 flex items-center justify-center rounded-lg px-2 py-2 border", nodeId === selectedNode ? "border-zinc-500" : "border-zinc-300")}

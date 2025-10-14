@@ -55,7 +55,7 @@ export const NodeInfoBar = () => {
                 <div
                     className={cn(
                         "transition-all duration-300 ease-in-out overflow-y-auto",
-                        collapsed ? "opacity-0 h-0" : "opacity-100 p-4 h-auto"
+                        collapsed ? "opacity-0 h-0" : "opacity-100 px-4 py-4 h-auto"
                     )}
                 >
                     {InfoComp && <InfoComp nodeId={id} />}

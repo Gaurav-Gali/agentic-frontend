@@ -1,7 +1,7 @@
 import React from 'react';
 import NodeEditor from "@/components/Nodes/NodeEditor";
 import {NodeInfoBar} from "@/components/projects/NodeInfoBar";
-import AbsoluteWrapper from "@/components/AbsoluteWrapper";
+import AbsoluteWrapper from "@/components/utilities/AbsoluteWrapper";
 import NodeSelectorBox from "@/components/projects/NodeSelectorBox";
 
 const Page = () => {
