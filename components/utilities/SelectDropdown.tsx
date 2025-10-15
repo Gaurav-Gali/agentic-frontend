@@ -10,7 +10,7 @@ import {
 
 const SelectDropdown = ({elements, setElements, width, height}:{elements:string[], setElements:(item:string)=>void, width:number, height:number}) => {
     return (
-        <Select>
+        <Select onValueChange={setElements}>
             <SelectTrigger className={"bg-white text-zinc-500 px-3 outline-none shadow-none border border-zinc-200 rounded-full cursor-pointer"} style={{width:`${width}px`, height:`${height}px`}}>
                 <SelectValue placeholder="GET" />
             </SelectTrigger>

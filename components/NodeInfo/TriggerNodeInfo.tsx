@@ -1,17 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSetNodeData} from "@/hooks/NodeActions/useSetNodeData";
-import {TriggerRequestType} from "@/types/TriggerRequestType";
+import {TriggerRequestType} from "@/types/CustomNodeTypes/TriggerRequestType";
 import SelectDropdown from "@/components/utilities/SelectDropdown";
 import {ArrowRight} from "lucide-react";
 import {cn} from "@/lib/utils";
 import JsonEditor from "@/components/utilities/JsonEditor";
+import {useFetchNode} from "@/hooks/NodeActions/useFetchNode";
+import {formatJSON} from "@/actions/FormatJSON";
+import {NodeType} from "@/types/NodeType";
 
 const TriggerNodeInfo:React.FC<{ nodeId: string }> = ({nodeId}) => {
     const setNodeData = useSetNodeData();
 
+    const fetchNode = useFetchNode();
+    const curNode:NodeType|null = fetchNode(nodeId);
+
     const [reqType,setReqType] = useState<string>("GET");
+
     const [reqData,setReqData] = useState<string>("");
+    const [initialized, setInitialized] = useState(false);
+
     const [reqAttribute,setReqAttribute] = useState<string>("Body");
+
+    useEffect(() => {
+        // @ts-ignore
+        if (!initialized && curNode?.data?.requestData) {
+            // @ts-ignore
+            setReqData(formatJSON(JSON.stringify(curNode.data.requestData)) || "");
+            setInitialized(true);
+        }
+    }, [curNode, initialized]);
+
 
     const reqTypes = [
         'GET',
@@ -22,9 +41,9 @@ const TriggerNodeInfo:React.FC<{ nodeId: string }> = ({nodeId}) => {
     ];
 
     const reqAttributes = [
+        'Body',
         'Params',
         'Headers',
-        'Body'
     ]
 
     const handleSendRequest = () => {
