@@ -44,12 +44,17 @@ const RequestRouterNode = ({ id }: { id: string }) => {
                 nodeData[outputKey] = incomingData.requestData;
                 nodeData["rawData"] = incomingData;
             } else {
-                setNodeData(id, {"trigger-output":null});
-                return;
+                console.warn(`Unknown request type received: ${reqType}`);
             }
         }
 
-        setNodeData(id, nodeData);
+        const allNull = Object.values(nodeData).every((v) => v === null);
+
+        if (allNull) {
+            setNodeData(id, null);
+        } else {
+            setNodeData(id, nodeData);
+        }
     };
 
     return (
