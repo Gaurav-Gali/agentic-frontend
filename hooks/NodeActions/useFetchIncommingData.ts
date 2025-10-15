@@ -17,17 +17,23 @@ export const useFetchIncommingData = () => {
             return null;
         }
 
-        const sourceNodesData = incomingEdges
-            .map(edge => nodes.find(node => node.id === edge.source)?.data)
-            .filter(Boolean) as object[]; // Remove undefined/null
+        const dataFromEdges = incomingEdges
+            .map(edge => {
+                const sourceNode = nodes.find(n => n.id === edge.source);
+                if (!sourceNode || !sourceNode.data) return null;
 
-        if (sourceNodesData.length === 0) {
+                // Return only the data corresponding to the source handle
+                return sourceNode.data[edge.sourceHandle];
+            })
+            .filter(Boolean) as object[];
+
+        if (dataFromEdges.length === 0) {
             setInCommingData(null);
             return null;
         }
 
-        setInCommingData(sourceNodesData);
-        return sourceNodesData;
+        setInCommingData(dataFromEdges);
+        return dataFromEdges;
     }
 
     return fetchIncommingData;

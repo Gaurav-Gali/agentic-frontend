@@ -22,8 +22,10 @@ const NodeWrapper = ({children, nodeName, nodeId,sourceHandles, targetHandles, h
 
         console.log(fetchNode(nodeId));
 
-        setRunning(false);
-        setExecuted(true);
+        setTimeout(() => {
+            setRunning(false);
+            setExecuted(true);
+        },250)
     }
 
     const maxHandles = Math.max(sourceHandles?.length || 0, targetHandles?.length || 0);
@@ -57,14 +59,50 @@ const NodeWrapper = ({children, nodeName, nodeId,sourceHandles, targetHandles, h
 
             </span>
             <div
-                className={cn("bg-white min-w-10 flex items-center justify-center rounded-lg px-2 py-2 border", nodeId === selectedNode ? "border-zinc-500" : "border-zinc-300")}
+                className={cn("bg-white min-w-10 flex items-center justify-center gap-2 rounded-lg px-1 py-2 border", nodeId === selectedNode ? "border-zinc-500" : "border-zinc-300")}
                 style={{
                     minHeight: `${minHeight}px`
                 }}
             >
+                {targetHandles && targetHandles.every(h => h.label) && (
+                    <div className="flex flex-col gap-0.5 -mt-5">
+                        {targetHandles.map((handle: HandleType, index: number) => (
+                            <div
+                                key={index}
+                                style={{ top: `${25 + index * 10}px` }}
+                                className="rounded-full flex items-center justify-start px-0.5"
+                            >
+                                <p className="text-[5px] text-zinc-600">{handle.label}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
                 {children}
+
+                {sourceHandles && sourceHandles.every(h => h.label) && (
+                    <div className="flex flex-col gap-0.5 mt-2.5">
+                        {sourceHandles.map((handle: HandleType, index: number) => (
+                            <div
+                                key={index}
+                                style={{ top: `${25 + index * 10}px` }}
+                                className="rounded-full flex items-center justify-end px-0.5"
+                            >
+                                <p className="text-[5px] text-zinc-600">{handle.label}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
             </div>
-            <p className={"text-[8px] capitalize font-normal text-zinc-500"}>{nodeName}</p>
+            <p
+                className={
+                    "text-[8px] flex items-center justify-center text-center capitalize font-normal text-zinc-500 w-10 break-words whitespace-normal"
+                }
+            >
+                {nodeName}
+            </p>
+
 
             {/*Output Handles*/}
             {sourceHandles?.map((handle:HandleType, index:number) => (

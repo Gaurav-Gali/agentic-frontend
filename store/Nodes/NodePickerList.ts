@@ -1,6 +1,6 @@
 import {atom} from "jotai";
 import {NodePickerListType} from "@/types/NodePickerListType";
-import {Zap, Send, Braces} from "lucide-react";
+import {Zap, Send, Braces, Route} from "lucide-react";
 
 export const NodePickerListAtom = atom<NodePickerListType[]>(
     [
@@ -11,7 +11,12 @@ export const NodePickerListAtom = atom<NodePickerListType[]>(
                     nodeName:"Trigger",
                     nodeType:"triggerNode",
                     nodeIcon: Zap
-                }
+                },
+                {
+                    nodeName:"Request Router",
+                    nodeType:"requestRouterNode",
+                    nodeIcon: Route
+                },
             ]
         },
         {

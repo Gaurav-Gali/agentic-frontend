@@ -2,11 +2,11 @@ import React from "react";
 import { HandleType } from "@/types/HandleType";
 import NodeWrapper from "@/components/Nodes/NodeWrapper";
 import { Send } from "lucide-react";
-import { useFetchIncommingData } from "@/hooks/NodeActions/useFetchIncommingData";
+import {useFetchIncommingData} from "@/hooks/NodeActions/useFetchIncommingData";
 import { useSetNodeData } from "@/hooks/NodeActions/useSetNodeData";
 
 const ResponseNode = ({ id }: { id: string }) => {
-    const fetchIncommingData = useFetchIncommingData();
+    const fetchIncommingNode = useFetchIncommingData();
     const setNodeData = useSetNodeData();
 
     const targetHandles: HandleType[] = [
@@ -17,11 +17,12 @@ const ResponseNode = ({ id }: { id: string }) => {
     ];
 
     const handleRun = () => {
-        const incoming = fetchIncommingData(id);
+        const incomingDataList = fetchIncommingNode(id);
 
-        if (incoming && Array.isArray(incoming) && incoming.length > 0) {
-            const incomingData = incoming[0];
-            setNodeData(id, incomingData);
+        if (incomingDataList && incomingDataList.length > 0) {
+            // For ResponseNode, we just take the first connected handle’s data
+            const data = incomingDataList[0];
+            setNodeData(id, data);
         } else {
             setNodeData(id, null);
         }
@@ -35,7 +36,7 @@ const ResponseNode = ({ id }: { id: string }) => {
             targetHandles={targetHandles}
             sourceHandles={null}
         >
-            <div>
+            <div className="flex justify-center items-center w-full h-full">
                 <Send className="text-indigo-400" strokeWidth={1.5} size={16} />
             </div>
         </NodeWrapper>

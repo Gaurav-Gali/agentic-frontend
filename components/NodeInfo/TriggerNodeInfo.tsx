@@ -23,10 +23,17 @@ const TriggerNodeInfo:React.FC<{ nodeId: string }> = ({nodeId}) => {
     const [reqAttribute,setReqAttribute] = useState<string>("Body");
 
     useEffect(() => {
-        // @ts-ignore
-        if (!initialized && curNode?.data?.requestData) {
+        if (!initialized && curNode?.data?.["trigger-output"]) {
+            const triggerOutput = curNode.data["trigger-output"];
+
+            // Safely extract request data
             // @ts-ignore
-            setReqData(formatJSON(JSON.stringify(curNode.data.requestData)) || "");
+            const reqTypeFromNode = triggerOutput?.requestType || "GET";
+            // @ts-ignore
+            const reqDataFromNode = triggerOutput?.requestData || {};
+
+            setReqType(reqTypeFromNode);
+            setReqData(formatJSON(JSON.stringify(reqDataFromNode)) || "");
             setInitialized(true);
         }
     }, [curNode, initialized]);
@@ -53,10 +60,9 @@ const TriggerNodeInfo:React.FC<{ nodeId: string }> = ({nodeId}) => {
         }
 
         let parsedData: object | null = null;
-
         try {
             parsedData = JSON.parse(reqData);
-        } catch (error) {
+        } catch {
             parsedData = null;
         }
 
@@ -65,14 +71,16 @@ const TriggerNodeInfo:React.FC<{ nodeId: string }> = ({nodeId}) => {
             return;
         }
 
-        const req: TriggerRequestType = {
-            requestType: reqType,
-            requestData: parsedData,
+        const nodeData = {
+            "trigger-output": {
+                requestType: reqType,
+                requestData: parsedData
+            }
         };
 
-        setNodeData(nodeId, req);
+        console.log("node data:", nodeData);
+        setNodeData(nodeId, nodeData);
     };
-
 
 
     return (

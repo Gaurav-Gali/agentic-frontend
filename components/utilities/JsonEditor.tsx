@@ -18,28 +18,30 @@ interface JsonEditorProps {
 
 const JsonEditor: React.FC<JsonEditorProps> = ({value, onChange, height = "250px", width = "100%", readOnly = false}) => {
     return (
-        <AceEditor
-            mode="json"
-            theme="chrome"
-            name="json-editor"
-            value={value}
-            onChange={onChange}
-            fontSize={14}
-            width={width}
-            height={height}
-            readOnly={readOnly}
-            showPrintMargin={false}
-            showGutter={true}
-            highlightActiveLine={true}
-            setOptions={{
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-                enableSnippets: true,
-                showLineNumbers: true,
-                tabSize: 2,
-            }}
-            editorProps={{ $blockScrolling: true }}
-        />
+        <div className={"border border-zinc-100"}>
+            <AceEditor
+                mode="json"
+                theme="chrome"
+                name="json-editor"
+                value={value}
+                onChange={onChange}
+                fontSize={14}
+                width={width}
+                height={height}
+                readOnly={readOnly}
+                showPrintMargin={false}
+                showGutter={true}
+                highlightActiveLine={true}
+                setOptions={{
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    enableSnippets: true,
+                    showLineNumbers: true,
+                    tabSize: 2,
+                }}
+                editorProps={{ $blockScrolling: true }}
+            />
+        </div>
     );
 };
 
